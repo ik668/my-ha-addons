@@ -10,7 +10,7 @@ configuration:
   flow_control:
     name: Hardware flow control
     description: Enable hardware flow control for serial port.
-  tx_power:
+  发射功率:
     name: Transmit power (dBm)
     description: >-
       Transmit power requested from the radio, in dBm. Upstream hardcodes

@@ -1,0 +1,43 @@
+---
+configuration:
+  device:
+    name: 设备
+    description: OpenThread RCP 无线模块所在的串口设备。
+  baudrate:
+    name: 波特率
+    description: 与无线模块通信的串口波特率，取决于固件。
+  flow_control:
+    name: 硬件流控
+    description: 是否启用串口硬件流控。
+  发射功率:
+    name: 发射功率（dBm）
+    description: >-
+      向射频芯片请求的发射功率，单位 dBm。官方版本固定写死 6 dBm，
+      本版本默认 20 dBm（2.4 GHz RCP 模块的典型上限）。
+      芯片会把该值量化到最接近的可用功率档位，因此实际回读值可能略有差异
+      （例如在 EFR32MG24 上设 6 会回读 5）。
+  backbone_interface:
+    name: 骨干网接口
+    description: >-
+      用做骨干网的网络接口。未指定时使用主接口。
+  network_device:
+    name: 网络设备
+    description: >-
+      以 <host:port> 形式连接远端 RCP（优先级高于上面的串口配置）。
+      不推荐使用，详见文档。
+  otbr_log_level:
+    name: OpenThread 边界路由器日志级别
+    description: 设置 otbr-agent 的日志级别。
+  firewall:
+    name: OTBR 防火墙
+    description: 启用 OpenThread 边界路由器防火墙，拦截不必要的流量。
+  nat64:
+    name: NAT64
+    description: >-
+      启用 IPv6 到 IPv4 的地址转换，让 Thread 设备可以访问互联网上的 IPv4 设备。
+  beta:
+    name: Beta
+    description: 启用 beta 模式，运行更新、实验性的 OpenThread 边界路由器版本。
+network:
+  8080/tcp: OpenThread Web 端口
+  8081/tcp: OpenThread REST API 端口

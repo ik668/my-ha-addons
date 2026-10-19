@@ -17,14 +17,20 @@ bashio::log.info "Setting OpenThread mDNS local hostname to ${mdns_localhostname
 ot-ctl mdns localhostname "${mdns_localhostname}"
 ot-ctl mdns enable
 
-# Transmit power is user configurable via the `tx_power` option (dBm).
+# Transmit power is user configurable via the `发射功率` option (dBm).
 # Upstream hardcoded `ot-ctl txpower 6` to avoid asymmetric link quality with
 # other Thread routers; the default here is raised to 20 dBm, which is the
 # maximum supported by most 2.4 GHz RCP radios (e.g. EFR32MG24).
-if bashio::config.has_value 'tx_power'; then
-    tx_power="$(bashio::config 'tx_power')"
-else
-    tx_power=20
+#
+# NOTE: the option key is non-ASCII, so bashio::config cannot be used here
+# (it builds a jq expression like `.发射功率`, which is not valid jq syntax).
+# Read the raw options file with bracket notation instead.
+tx_power=20
+if [ -f /data/options.json ]; then
+    tx_power_value="$(jq --raw-output '.["发射功率"] // empty' /data/options.json 2>/dev/null)"
+    if [ -n "${tx_power_value}" ]; then
+        tx_power="${tx_power_value}"
+    fi
 fi
 bashio::log.info "Setting OpenThread TX power to ${tx_power} dBm."
 ot-ctl txpower "${tx_power}"

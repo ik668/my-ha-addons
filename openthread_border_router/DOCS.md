@@ -76,7 +76,7 @@ App configuration:
 | device (mandatory) | Serial port where the OpenThread RCP Radio is attached |
 | baudrate           | Serial port baudrate (depends on firmware)   |
 | flow_control       | If hardware flow control should be enabled (depends on firmware) |
-| tx_power           | Transmit power requested from the radio, in dBm (default 20, range -20..20). Upstream hardcodes 6 dBm. |
+| 发射功率 | Transmit power requested from the radio, in dBm (default 20, range -20..20). Upstream hardcodes 6 dBm. |
 | otbr_log_level     | Set the log level of the OpenThread BorderRouter Agent     |
 | firewall           | Enable OpenThread Border Router firewall to block unnecessary traffic |
 | nat64              | Enable NAT64 to allow Thread devices accessing IPv4 addresses |

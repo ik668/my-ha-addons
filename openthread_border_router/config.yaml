@@ -1,9 +1,9 @@
 ---
-version: 3.3.0-hp1
+version: 3.3.0-hp2
 breaking_versions: [3.0.0]
 slug: openthread_border_router_hp
-name: OpenThread Border Router (custom TX power)
-description: OpenThread Border Router with user-configurable transmit power
+name: OpenThread 边界路由器（可调发射功率）
+description: 基于官方 OpenThread Border Router，增加可配置的发射功率（默认 20 dBm）
 url: >-
   https://github.com/home-assistant/addons/tree/master/openthread_border_router
 arch:
@@ -32,7 +32,7 @@ options:
   device: null
   baudrate: "460800"
   flow_control: true
-  tx_power: 20
+  发射功率: 20
   otbr_log_level: notice
   firewall: true
   nat64: false
@@ -47,7 +47,7 @@ schema:
   device: device(subsystem=tty)
   baudrate: list(57600|115200|230400|460800|921600|1000000)
   flow_control: bool
-  tx_power: int(-20,20)
+  发射功率: int(-20,20)
   backbone_interface: str?
   network_device: str?
   otbr_log_level: list(debug|info|notice|warning|error|critical|alert|emergency)
