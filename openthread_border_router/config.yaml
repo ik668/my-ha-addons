@@ -1,5 +1,5 @@
 ---
-version: 3.3.0-hp2
+version: 3.3.0-hp3
 breaking_versions: [3.0.0]
 slug: openthread_border_router_hp
 name: OpenThread 边界路由器（可调发射功率）

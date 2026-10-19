@@ -3,7 +3,7 @@
 > [!NOTE]
 > **This is a modified build.** It is based on the upstream Home Assistant
 > OpenThread Border Router app with one change: the transmit power is no longer
-> hardcoded to 6 dBm. Instead it is exposed as the `tx_power` option, defaulting
+> hardcoded to 6 dBm. Instead it is exposed as the `发射功率` option, defaulting
 > to **20 dBm**.
 >
 > Upstream runs `ot-ctl txpower 6` at startup to avoid asymmetric link quality
@@ -11,6 +11,13 @@
 > interference and power consumption. The radio rounds the requested value to
 > its nearest supported power level, so the value reported by `ot-ctl txpower`
 > may differ by a few dB (e.g. 6 dBm is reported as 5 dBm on an EFR32MG24).
+>
+> **This app does not compile OpenThread.** It is a derivative image based on
+> the official prebuilt app image (`homeassistant/{arch}-addon-otbr`, pinned in
+> `build.yaml`); only the files in `rootfs/` are overwritten. Installing
+> therefore takes seconds instead of ~20-40 minutes. To track a newer upstream
+> release, bump the tag in `build.yaml`. The original from-source Dockerfile is
+> kept as `Dockerfile.from-source`.
 
 ## Installation
 
