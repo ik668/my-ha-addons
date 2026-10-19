@@ -1,0 +1,57 @@
+---
+version: 3.3.0-hp1
+breaking_versions: [3.0.0]
+slug: openthread_border_router_hp
+name: OpenThread Border Router (custom TX power)
+description: OpenThread Border Router with user-configurable transmit power
+url: >-
+  https://github.com/home-assistant/addons/tree/master/openthread_border_router
+arch:
+  - aarch64
+  - amd64
+homeassistant: 2025.7.0
+gpio: true
+hassio_api: true
+discovery:
+  - otbr
+# IPC is only used within the Add-on
+host_ipc: false
+host_network: true
+host_uts: true
+privileged:
+  - IPC_LOCK
+  - NET_ADMIN
+  - NET_RAW
+devices:
+  - /dev/net/tun
+# NOTE: `image:` intentionally removed. If an image is set, Supervisor pulls the
+# prebuilt upstream image and ignores the local Dockerfile/rootfs patches,
+# so the custom TX power would never take effect.
+init: false
+options:
+  device: null
+  baudrate: "460800"
+  flow_control: true
+  tx_power: 20
+  otbr_log_level: notice
+  firewall: true
+  nat64: false
+  beta: false
+ports:
+  8080/tcp: null
+  8081/tcp: null
+ports_description:
+  8080/tcp: OpenThread Web port
+  8081/tcp: OpenThread REST API port
+schema:
+  device: device(subsystem=tty)
+  baudrate: list(57600|115200|230400|460800|921600|1000000)
+  flow_control: bool
+  tx_power: int(-20,20)
+  backbone_interface: str?
+  network_device: str?
+  otbr_log_level: list(debug|info|notice|warning|error|critical|alert|emergency)
+  firewall: bool
+  nat64: bool
+  beta: bool?
+startup: services
