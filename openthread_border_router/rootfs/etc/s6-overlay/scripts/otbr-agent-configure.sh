@@ -33,5 +33,14 @@ if [ -f /data/options.json ]; then
     fi
 fi
 bashio::log.info "Setting OpenThread TX power to ${tx_power} dBm."
-ot-ctl txpower "${tx_power}"
-bashio::log.info "TX power reported by the radio: $(ot-ctl txpower | head -n 1)"
+ot-ctl txpower "${tx_power}" >/dev/null 2>&1
+
+# Report what the radio actually accepted. The radio only supports discrete
+# power levels, so it quantizes/clamps the requested value; showing the
+# difference is how the user discovers the real usable range of the chip.
+actual_power="$(ot-ctl txpower 2>/dev/null | head -n 1 | tr -d '\r')"
+actual_dbm="$(echo "${actual_power}" | awk '{print $1}')"
+bashio::log.info "TX power reported by the radio: ${actual_power}"
+if [ -n "${actual_dbm}" ] && [ "${actual_dbm}" != "${tx_power}" ]; then
+    bashio::log.warning "Radio quantized/clamped ${tx_power} dBm to ${actual_dbm} dBm (only discrete power levels are supported)"
+fi

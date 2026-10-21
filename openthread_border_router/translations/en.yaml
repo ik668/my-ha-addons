@@ -13,10 +13,13 @@ configuration:
   发射功率:
     name: Transmit power (dBm)
     description: >-
-      Transmit power requested from the radio, in dBm. Upstream hardcodes
-      6 dBm; this build defaults to 20 dBm (typical maximum for 2.4 GHz
-      RCP radios). The radio quantizes the value to its nearest supported
-      power level, so the reported power may differ slightly.
+      Transmit power requested from the radio, in dBm. Range -128..127, the
+      OpenThread API (int8) limit. Upstream hardcodes 6 dBm; this build defaults
+      to 20 dBm (typical maximum for 2.4 GHz RCP radios). The actual usable
+      range is defined by the chip's own power table (e.g. -33..20 dBm on an
+      EFR32MG24) and only discrete levels exist: 6 is reported back as 5, 30 as
+      20. The startup log prints the value the radio reports and warns when it
+      differs from the requested one.
   backbone_interface:
     name: Backbone Network Interface
     description: >-

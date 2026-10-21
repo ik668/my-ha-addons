@@ -1,5 +1,5 @@
 ---
-version: 3.3.0-hp3
+version: 3.3.0-hp4
 breaking_versions: [3.0.0]
 slug: openthread_border_router_hp
 name: OpenThread 边界路由器（可调发射功率）
@@ -47,7 +47,9 @@ schema:
   device: device(subsystem=tty)
   baudrate: list(57600|115200|230400|460800|921600|1000000)
   flow_control: bool
-  发射功率: int(-20,20)
+  # Range is the OpenThread API limit (int8 dBm). The radio itself clamps and
+  # quantizes to its own power table; the actual value is reported in the log.
+  发射功率: int(-128,127)
   backbone_interface: str?
   network_device: str?
   otbr_log_level: list(debug|info|notice|warning|error|critical|alert|emergency)
